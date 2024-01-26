@@ -8,6 +8,9 @@
 body {
     font-family: var(--font-family);
     background-color: #ededed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
@@ -20,11 +23,23 @@ body {
     }
 }
 
+.footer {
+    color: var(--primary-color);
+    margin-top: auto;
+    padding: 20px 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
 @media (max-width: 768px) {
     .header {
         &__title {
             font-size: 60px;
         }
+    }
+
+    .footer {
+        font-size: 18px;
     }
 }
 
@@ -33,5 +48,9 @@ body {
         &__title {
             font-size: 40px;
         }
+    }
+
+    .footer {
+        font-size: 14px;
     }
 }
