@@ -101,8 +101,7 @@ body {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         background-color: #fefefe;
         display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: repeat(12, 1fr);
+        grid-template-columns: repeat(16, 1fr);
     }
 }
 
