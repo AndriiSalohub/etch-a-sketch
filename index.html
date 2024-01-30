@@ -15,13 +15,18 @@
         <main class="drawing-panel">
             <section class="drawing-panel__controls">
                 <input type="color" class="drawing-panel__color-picker" />
-                <button class="drawing-panel__controls-button">
+                <button
+                    id="color"
+                    class="drawing-panel__controls-button current-mode"
+                >
                     Color mode
                 </button>
                 <button class="drawing-panel__controls-button">
                     Rainbow mode
                 </button>
-                <button class="drawing-panel__controls-button">Eraser</button>
+                <button id="eraser" class="drawing-panel__controls-button">
+                    Eraser
+                </button>
                 <button id="clear-btn" class="drawing-panel__controls-button">
                     Clear
                 </button>

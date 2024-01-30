@@ -1,21 +1,20 @@
-let currentColor = "#000";
+const state = {
+    currentColor: "#000",
+    colorModeColor: "#000",
+    isMouseDown: false,
+};
 
 const canvas = document.querySelector(".drawing-panel__canvas");
 const canvasSizeInput = document.querySelector(".drawing-panel__size-changer");
 const colorPickerInput = document.querySelector(".drawing-panel__color-picker");
-const clearBtn = document.querySelector("#clear-btn");
 const sizeText = document.querySelector(".drawing-panel__size-text");
 
-let isMouseDown = false;
+const allButtons = document.querySelectorAll(".drawing-panel__controls-button");
+const colorButton = document.querySelector("#color");
+const clearButton = document.querySelector("#clear-btn");
+const eraserButton = document.querySelector("#eraser");
 
 changeInputSize(canvasSizeInput.value);
-
-function changeInputSize(size) {
-    for (let i = 0; i < size * size; i++) {
-        const div = document.createElement("div");
-        canvas.append(div);
-    }
-}
 
 canvas.addEventListener("mousedown", handleMouseDown);
 canvas.addEventListener("mouseup", handleMouseUp);
@@ -25,27 +24,42 @@ canvasSizeInput.addEventListener("input", handleSizeChange);
 
 colorPickerInput.addEventListener("input", handleColorPick);
 
-clearBtn.addEventListener("click", () => {
-    clearAllCells();
-});
+colorButton.addEventListener("click", handleColorModeClick);
+eraserButton.addEventListener("click", handleEraserModeClick);
+clearButton.addEventListener("click", handleClearButtonClick);
+
+function changeInputSize(size) {
+    for (let i = 0; i < size * size; i++) {
+        const div = document.createElement("div");
+        canvas.append(div);
+    }
+}
+
+function setCurrentMode(button) {
+    allButtons.forEach((btn) => {
+        btn.classList.remove("current-mode");
+    });
+    button.classList.add("current-mode");
+}
 
 function handleMouseDown(e) {
-    e.target.style.background = currentColor;
-    isMouseDown = true;
+    e.target.style.background = state.currentColor;
+    state.isMouseDown = true;
 }
 
 function handleMouseUp() {
-    isMouseDown = false;
+    state.isMouseDown = false;
 }
 
 function handleMouseOver(e) {
-    if (isMouseDown) {
-        e.target.style.background = currentColor;
+    if (state.isMouseDown) {
+        e.target.style.background = state.currentColor;
     }
 }
 
 function handleColorPick(e) {
-    currentColor = e.target.value;
+    state.currentColor = e.target.value;
+    state.colorModeColor = e.target.value;
 }
 
 function clearAllCells() {
@@ -61,4 +75,21 @@ function handleSizeChange(e) {
     sizeText.textContent = `${size} x ${size}`;
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+}
+
+function handleColorModeClick(e) {
+    state.currentColor = state.colorModeColor;
+    setCurrentMode(e.target);
+}
+
+function handleEraserModeClick(e) {
+    state.currentMode = "eraser";
+    state.currentColor = "#fff";
+    setCurrentMode(e.target);
+}
+
+function handleClearButtonClick() {
+    clearAllCells();
+    setCurrentMode(colorButton);
+    state.currentColor = state.colorModeColor;
 }
