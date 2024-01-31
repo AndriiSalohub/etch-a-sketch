@@ -2,6 +2,7 @@ const state = {
     currentColor: "#000",
     colorModeColor: "#000",
     isMouseDown: false,
+    mode: "color",
 };
 
 const canvas = document.querySelector(".drawing-panel__canvas");
@@ -13,6 +14,7 @@ const allButtons = document.querySelectorAll(".drawing-panel__controls-button");
 const colorButton = document.querySelector("#color");
 const clearButton = document.querySelector("#clear-btn");
 const eraserButton = document.querySelector("#eraser");
+const rainbowButton = document.querySelector("#rainbow");
 
 changeInputSize(canvasSizeInput.value);
 
@@ -27,6 +29,7 @@ colorPickerInput.addEventListener("input", handleColorPick);
 colorButton.addEventListener("click", handleColorModeClick);
 eraserButton.addEventListener("click", handleEraserModeClick);
 clearButton.addEventListener("click", handleClearButtonClick);
+rainbowButton.addEventListener("click", handleRainbowButtonClick);
 
 function changeInputSize(size) {
     for (let i = 0; i < size * size; i++) {
@@ -43,7 +46,14 @@ function setCurrentMode(button) {
 }
 
 function handleMouseDown(e) {
-    e.target.style.background = state.currentColor;
+    if (state.mode === "color") {
+        e.target.style.background = state.currentColor;
+    }
+
+    if (state.mode === "rainbow") {
+        e.target.style.background = generateRandomColor();
+    }
+
     state.isMouseDown = true;
 }
 
@@ -52,9 +62,20 @@ function handleMouseUp() {
 }
 
 function handleMouseOver(e) {
-    if (state.isMouseDown) {
+    if (state.isMouseDown && state.mode === "color") {
         e.target.style.background = state.currentColor;
     }
+
+    if (state.isMouseDown && state.mode === "rainbow") {
+        e.target.style.backgroundColor = generateRandomColor();
+    }
+}
+
+function generateRandomColor() {
+    const randomR = Math.floor(Math.random() * 256);
+    const randomG = Math.floor(Math.random() * 256);
+    const randomB = Math.floor(Math.random() * 256);
+    return `rgba(${randomR}, ${randomG}, ${randomB})`;
 }
 
 function handleColorPick(e) {
@@ -86,10 +107,17 @@ function handleEraserModeClick(e) {
     state.currentMode = "eraser";
     state.currentColor = "#fff";
     setCurrentMode(e.target);
+    state.mode = "color";
 }
 
 function handleClearButtonClick() {
     clearAllCells();
     setCurrentMode(colorButton);
     state.currentColor = state.colorModeColor;
+    state.mode = "color";
+}
+
+function handleRainbowButtonClick(e) {
+    state.mode = "rainbow";
+    setCurrentMode(rainbowButton);
 }
