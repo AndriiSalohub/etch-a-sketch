@@ -22,6 +22,10 @@ canvas.addEventListener("mousedown", handleMouseDown);
 canvas.addEventListener("mouseup", handleMouseUp);
 canvas.addEventListener("mouseover", handleMouseOver);
 
+canvas.addEventListener("touchstart", handleTouchStart);
+canvas.addEventListener("touchend", handleTouchEnd);
+canvas.addEventListener("touchmove", handleTouchMove);
+
 canvasSizeInput.addEventListener("input", handleSizeChange);
 
 colorPickerInput.addEventListener("input", handleColorPick);
@@ -99,8 +103,13 @@ function handleSizeChange(e) {
 }
 
 function handleColorModeClick(e) {
-    state.currentColor = state.colorModeColor;
-    setCurrentMode(e.target);
+    state.mode = "color";
+    if (state.mode === "rainbow") {
+        state.currentColor = state.colorModeColor;
+    } else {
+        state.currentColor = state.colorModeColor;
+        setCurrentMode(e.target);
+    }
 }
 
 function handleEraserModeClick(e) {
@@ -117,7 +126,7 @@ function handleClearButtonClick() {
     state.mode = "color";
 }
 
-function handleRainbowButtonClick(e) {
+function handleRainbowButtonClick() {
     state.mode = "rainbow";
     setCurrentMode(rainbowButton);
 }
