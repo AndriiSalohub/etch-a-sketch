@@ -22,9 +22,9 @@ canvas.addEventListener("mousedown", handleMouseDown);
 canvas.addEventListener("mouseup", handleMouseUp);
 canvas.addEventListener("mouseover", handleMouseOver);
 
-canvas.addEventListener("touchstart", handleTouchStart);
-canvas.addEventListener("touchend", handleTouchEnd);
-canvas.addEventListener("touchmove", handleTouchMove);
+canvas.addEventListener("touchstart", handleMouseDown);
+canvas.addEventListener("touchend", handleMouseUp);
+canvas.addEventListener("touchmove", handleMouseOver);
 
 canvasSizeInput.addEventListener("input", handleSizeChange);
 
