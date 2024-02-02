@@ -21,12 +21,16 @@ Rainbow Mode adds an element of randomness to the drawing experience:
 - Every pixel on the canvas changes color randomly, creating a vibrant and dynamic display.
 - Users can still utilize the eraser tool and adjust the canvas pixel size in Rainbow Mode.
 
+## Project Configuration
+
+- Vite
+- Prettier
+
 ## Tech Stack
 
 - HTML
 - SCSS
 - JavaScript
-- Vite
 
 ## How to Use
 
