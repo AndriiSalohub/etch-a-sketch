@@ -24,7 +24,7 @@ canvas.addEventListener("mouseover", handleMouseOver);
 
 canvas.addEventListener("touchstart", handleMouseDown);
 canvas.addEventListener("touchend", handleMouseUp);
-canvas.addEventListener("touchmove", handleMouseOver);
+canvas.addEventListener("touchmove", handleTouchMove);
 
 canvasSizeInput.addEventListener("input", handleSizeChange);
 
@@ -59,6 +59,25 @@ function handleMouseDown(e) {
     }
 
     state.isMouseDown = true;
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    const touches = e.changedTouches;
+    for (let i = 0; i < touches.length; i++) {
+        const touch = touches[i];
+        const x = touch.clientX - canvas.offsetLeft;
+        const y = touch.clientY - canvas.offsetTop;
+        const cell = document.elementFromPoint(x, y);
+        if (cell) {
+            if (state.isMouseDown && state.mode === "color") {
+                cell.style.background = state.currentColor;
+            }
+            if (state.isMouseDown && state.mode === "rainbow") {
+                cell.style.backgroundColor = generateRandomColor();
+            }
+        }
+    }
 }
 
 function handleMouseUp() {
